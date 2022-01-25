@@ -4,8 +4,6 @@
 //
 //  Created by Bhamini Sundararaman on 1/9/22.
 //
-//some change
-
 
 import UIKit
 import ARKit
@@ -17,7 +15,10 @@ class ViewController: UIViewController,ARSessionDelegate {
     
    // @IBOutlet weak var rightEyeMatrix: UILabel!
     
+    @IBOutlet weak var movingCameraView: UIView!
+   
     @IBOutlet weak var sceneView: ARView!
+   
     
     var faceConfig = ARWorldTrackingConfiguration()
 
@@ -32,6 +33,8 @@ class ViewController: UIViewController,ARSessionDelegate {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
         
+      
+        
         guard ARWorldTrackingConfiguration.isSupported else {
             fatalError("World tracking is not supported on this device")
         }
@@ -41,6 +44,7 @@ class ViewController: UIViewController,ARSessionDelegate {
                                         //the view's AR scene information with SceneKit content.
         
         // Create a session configuration
+        
         
         
         sceneView.session.delegate = self
@@ -141,10 +145,10 @@ class ViewController: UIViewController,ARSessionDelegate {
     }
 
     
-    
-    func makeViewMove(x: Float, y: CGFloat){
-        sceneView.frame.x
-    }
+//    
+//    func makeViewMove(x: Float, y: CGFloat){
+//        sceneView.frame.x
+//    }
 }
 
 

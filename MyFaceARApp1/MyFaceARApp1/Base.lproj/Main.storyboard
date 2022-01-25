@@ -17,15 +17,41 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2XU-Dp-g5F">
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2XU-Dp-g5F">
                                 <rect key="frame" x="40" y="75" width="335" height="747"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <subviews>
+                                    <arView multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hoO-Er-Ojl">
+                                        <rect key="frame" x="-11" y="-10" width="356" height="767"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="767" id="RCd-Az-iw4"/>
+                                            <constraint firstAttribute="width" constant="356" id="oKu-4V-1Yt"/>
+                                        </constraints>
+                                    </arView>
+                                </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                                <constraints>
+                                    <constraint firstItem="hoO-Er-Ojl" firstAttribute="leading" secondItem="2XU-Dp-g5F" secondAttribute="leading" constant="-11" id="1Gb-sf-uM6"/>
+                                    <constraint firstAttribute="bottom" secondItem="hoO-Er-Ojl" secondAttribute="bottom" constant="-10" id="B4E-zs-JEP"/>
+                                    <constraint firstItem="hoO-Er-Ojl" firstAttribute="top" secondItem="2XU-Dp-g5F" secondAttribute="top" constant="-10" id="CbZ-7n-0UD"/>
+                                    <constraint firstAttribute="width" constant="335" id="fnk-oC-9vT"/>
+                                    <constraint firstAttribute="height" constant="747" id="hqd-ox-3NH"/>
+                                    <constraint firstAttribute="trailing" secondItem="hoO-Er-Ojl" secondAttribute="trailing" constant="-10" id="mEG-Zu-OcY"/>
+                                </constraints>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="2XU-Dp-g5F" secondAttribute="bottom" constant="40" id="73o-XJ-yX5"/>
+                            <constraint firstItem="2XU-Dp-g5F" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="31" id="E4B-ln-cZe"/>
+                            <constraint firstItem="2XU-Dp-g5F" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="40" id="ItN-6Z-pUr"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="2XU-Dp-g5F" secondAttribute="trailing" constant="39" id="xBq-je-aUQ"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="movingCameraView" destination="2XU-Dp-g5F" id="wey-Eo-aJn"/>
+                        <outlet property="sceneView" destination="hoO-Er-Ojl" id="CRz-n5-Azg"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
