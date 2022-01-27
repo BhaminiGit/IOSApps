@@ -15,25 +15,23 @@ class ViewController: UIViewController,ARSessionDelegate {
     
    // @IBOutlet weak var rightEyeMatrix: UILabel!
     
-    @IBOutlet weak var movingCameraView: UIView!
+    @IBOutlet weak var movingCameraView: UIView!  //x = 40, y = 75
    
     @IBOutlet weak var sceneView: ARView!
-   
-    
+       
     var faceConfig = ARWorldTrackingConfiguration()
 
-    
     var leftEyeNode = SCNNode()
     var rightEyeNode = SCNNode()
     var leftString = ""
     var rightString = ""
     
+    private let movingCircle = UIView(frame: CGRect(x: 50, y: 50, width: 50, height: 50))
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        
-      
         
         guard ARWorldTrackingConfiguration.isSupported else {
             fatalError("World tracking is not supported on this device")
@@ -41,20 +39,21 @@ class ViewController: UIViewController,ARSessionDelegate {
         guard ARWorldTrackingConfiguration.supportsUserFaceTracking else{
             fatalError("Does not support face tracking")
         }
-                                        //the view's AR scene information with SceneKit content.
+                                        
         
         // Create a session configuration
         
         
-        
+
         sceneView.session.delegate = self
         faceConfig.userFaceTrackingEnabled = true
-
-
-       
-    
         
-       
+        movingCircle.backgroundColor = .cyan
+        view.insertSubview(movingCircle, aboveSubview: sceneView)
+        
+        
+
+
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -73,11 +72,29 @@ class ViewController: UIViewController,ARSessionDelegate {
         leftString = scnmatToString(m: leftEyeNode.transform)
         rightString = scnmatToString(m: rightEyeNode.transform)
         
+        
+        let lXYP = calcLocation(rM: leftEyeNode.transform, z: 700)
+        let rXYP = calcLocation(rM: rightEyeNode.transform, z: 700)
 
+       // print("(\(lXYP.xp), \(lXYP.yp)) (\(rXYP.xp), \(rXYP.yp)) ")
         
-       // leftEyeMatrix.text = "left\n\(leftString)"
+        makeViewMove(left: lXYP, right: rXYP)
+//        if(movingCameraView.frame.origin.x == 20.0){
+//            movingCameraView.frame.origin.x = 60.0
+//        }
+//        else if(movingCameraView.frame.origin.x == 60.0){
+//            movingCameraView.frame.origin.x = 20.0
+//        }
+//        else {
+//            movingCameraView.frame.origin.x = 20.0
+//        }
+//
         
-        //print(faceAnchor.lookAtPoint)
+//      leftEyeMatrix.text = "left\n\(leftString)"
+//      rightEyeMatrix.text = "right\n\(rightString)"
+        
+        
+//      print(faceAnchor.lookAtPoint)
 //        if(faceAnchor.lookAtPoint.x > 0){
 //            print("right \(faceAnchor.lookAtPoint.x)")
 //        }
@@ -87,30 +104,8 @@ class ViewController: UIViewController,ARSessionDelegate {
 //        else{
 //            print("center \(faceAnchor.lookAtPoint.x)")
 //        }
-        
-
-       // rightEyeMatrix.text = "right\n\(rightString)"
-        
-        var lXYP = calcLocation(rM: leftEyeNode.transform, z: 10.0)
-        var rXYP = calcLocation(rM: rightEyeNode.transform, z: 10.0)
-        
-        print("(\(lXYP.xp), \(lXYP.yp)) (\(rXYP.xp), \(rXYP.yp)) ")
-
-
-       
-
-//        print("""
-//        \(leftString)
-//        \(rightString)
-//        """)
-//
-        
-        
+  
     }
-
-    
-
-    
     
     func scnmatToString(m: SCNMatrix4) -> String{
             let tempString : String = """
@@ -130,7 +125,7 @@ class ViewController: UIViewController,ARSessionDelegate {
         return String(temp)
     }
     
-    func calcLocation(rM: SCNMatrix4, z: Float) -> (xp: Float, yp: Float){
+    func calcLocation(rM: SCNMatrix4, z: Float) -> CGPoint{
         
         let oriVec :SCNVector4 = SCNVector4(0, 0, z, 1)
         
@@ -138,17 +133,19 @@ class ViewController: UIViewController,ARSessionDelegate {
         
         let xp = after.x
         let yp = after.y
+        let ret = CGPoint(x: CGFloat(xp) , y: CGFloat(yp))
+        return ret
         
-            
-        
-        return(xp,yp)
     }
 
     
-//    
-//    func makeViewMove(x: Float, y: CGFloat){
-//        sceneView.frame.x
-//    }
+    func makeViewMove(left: CGPoint, right: CGPoint){
+        let middle = (left.x + right.x) / CGFloat(2)
+        let yMid = (left.y + right.y) / CGFloat(2)
+        //movingCameraView.frame.origin = CGPoint(x: middle , y: CGFloat(75) )
+        movingCircle.frame.origin = CGPoint(x: middle + CGFloat(170), y: CGFloat(200))
+        print("hi")
+    }
 }
 
 
